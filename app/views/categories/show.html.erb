@@ -1,0 +1,14 @@
+<h1><%= @category.name %> Products</h1>
+
+<div class="products">
+  <% @products.each do |product| %>
+    <div class="product-card">
+      <h2><%= link_to product.name, product_path(product) %></h2>
+      <p><%= product.description.truncate(100) %></p>
+      <p><strong>Price:</strong> $<%= product.price %></p>
+      <% if product.image.attached? %>
+        <%= image_tag product.image, style: "max-width: 300px; height: auto;" %>   
+      <% end %>
+    </div>
+  <% end %>
+</div>

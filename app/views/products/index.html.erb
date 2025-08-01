@@ -1,0 +1,36 @@
+<h1>All Products</h1>
+
+<div class="mb-3">
+  <strong>Filter:</strong>
+  <%= link_to "All", products_path, class: "btn btn-outline-secondary btn-sm" %>
+  <%= link_to "New", products_path(filter: "new"), class: "btn btn-outline-primary btn-sm" %>
+  <%= link_to "Recently Updated", products_path(filter: "recent"), class: "btn btn-outline-warning btn-sm" %>
+  <%= link_to "On Sale", products_path(filter: "sale"), class: "btn btn-outline-danger btn-sm" %>
+</div>
+
+<div class="products row">
+  <% @products.each do |product| %>
+    <div class="product-card col-md-4 mb-4">
+      <div class="card h-100">
+        <% if product.image.attached? %>
+          <%= image_tag product.image, class: "card-img-top", style: "max-height: 200px; object-fit: cover;" %>
+        <% end %>
+
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to product.name, product_path(product) %></h5>
+          <p class="card-text"><%= product.description.truncate(100) %></p>
+          
+          <p class="card-text">
+            <strong>Price:</strong>
+            <% if product.on_sale? %>
+              <span class="text-muted text-decoration-line-through"><%= number_to_currency(product.price) %></span>
+              <span class="text-danger fw-bold"><%= number_to_currency(product.sale_price) %></span>
+            <% else %>
+              <%= number_to_currency(product.price) %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
